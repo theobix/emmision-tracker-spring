@@ -1,0 +1,58 @@
+scalar DateTime
+    @specifiedBy(url:"https://scalars.graphql.org/andimarek/date-time.html")
+
+
+enum TravelMethod { FOOT, BICYCLE, DIESEL_CAR, ELECTRIC_CAR, BUS, TRAMWAY, SUBWAY, FERRY, AIRPLANE }
+enum TimeUnit { HOUR, DAY, WEEK, MONTH, YEAR }
+
+type Travel {
+    id: ID!
+    method: TravelMethod!
+    datetime: DateTime
+    distance: Float
+    unitEmission: Int
+    emission: Float
+}
+
+type StatsGroup {
+    labels: [DateTime]
+
+    emissions(separateMethods: Boolean): [Stats]
+    distances(separateMethods: Boolean): [Stats]
+}
+
+type Stats {
+    name: String
+    data: [Float]
+}
+
+type TravelMethodInfo
+{
+    name: TravelMethod
+    emissionPerKilometer: Float
+}
+
+type OverallStats {
+    totalEmission: Float
+    totalDistance: Float
+    totalTravels: Int
+
+    methodsUsed: [String]
+    methodDistribution: [Float]
+    emissionDistribution: [Float]
+}
+
+type Query {
+    travelMethods: [TravelMethod]
+    travelHistory(page: Int, count: Int, descending:Boolean): [Travel]
+    travelById(id: ID!): Travel
+
+    stats(unit: TimeUnit, delta: Int): StatsGroup
+    overallStats: OverallStats
+
+    travelMethodInfo: [TravelMethodInfo]
+}
+
+type Mutation {
+    addTravel(method: TravelMethod!, distance: Float, datetime: DateTime): Travel
+}

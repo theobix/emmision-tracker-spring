@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,9 +35,12 @@ public class TravelsRepository {
         int sliceTo = Math.min(sliceFrom + count, travels.size());
 
         List<Travel> sortedTravels = travels.stream().sorted().toList();
-        if (descending) sortedTravels = sortedTravels.reversed();
+        if (!descending) {
+            List<?> shallowCopy = sortedTravels.subList(0, sortedTravels.size());
+            Collections.reverse(shallowCopy);
+        }
 
-        return sortedTravels.reversed().subList(sliceFrom, sliceTo).toArray(Travel[]::new);
+        return sortedTravels.subList(sliceFrom, sliceTo).toArray(Travel[]::new);
     }
 
     public Travel[] getTravelsBetween(OffsetDateTime after, OffsetDateTime before) {

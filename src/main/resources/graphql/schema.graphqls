@@ -10,7 +10,7 @@ type Travel {
     method: TravelMethod!
     datetime: DateTime
     distance: Float
-    unitEmission: Int
+    unitEmission: Float
     emission: Float
 }
 

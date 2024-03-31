@@ -80,7 +80,7 @@ public class StatsController {
 
     @SchemaMapping(typeName = "OverallStats", field = "methodDistribution")
     public float[] getMethodDistribution() {
-        return getDistribution(s -> (float)s.count());
+        return getDistribution(s -> (float)s.mapToDouble(Travel::distance).sum());
     }
 
     @SchemaMapping(typeName = "OverallStats", field = "emissionDistribution")

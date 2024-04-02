@@ -1,4 +1,4 @@
-package com.example.Emmision.Tracker;
+package com.example.Emmision.Tracker.domain;
 
 import java.time.OffsetDateTime;
 import java.util.List;

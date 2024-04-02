@@ -1,11 +1,11 @@
-package com.example.Emmision.Tracker;
+package com.example.Emmision.Tracker.util;
 
 import java.time.DayOfWeek;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
-public record Stats(String name, float[] data) {
+public class DateUtil {
 
     public static OffsetDateTime truncateDate(OffsetDateTime original, String unit) {
         if (unit.equals("WEEK")) {

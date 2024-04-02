@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public record Travel(String id, TravelMethod method, OffsetDateTime datetime, float distance, float unitEmission, float emission)
+public record Travel(String id, TravelMethod method, OffsetDateTime datetime, float distance, float emission)
     implements Comparable<Travel> {
 
     @Override

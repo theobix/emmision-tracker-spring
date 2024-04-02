@@ -1,5 +1,6 @@
 package com.example.Emmision.Tracker.controller;
 
+import com.example.Emmision.Tracker.constants.TimeUnit;
 import com.example.Emmision.Tracker.constants.TravelMethod;
 import com.example.Emmision.Tracker.domain.StatEntry;
 import com.example.Emmision.Tracker.domain.StatsGroup;
@@ -15,6 +16,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -29,32 +31,16 @@ public class StatsController {
 
     @QueryMapping
     public StatsGroup stats(@Argument String unit, @Argument int delta) {
-        OffsetDateTime truncatedDate = DateUtil.truncateDate(OffsetDateTime.now(), unit);
+        return new StatsGroup(new OffsetDateTime[0], new ArrayList<>());
+        /*OffsetDateTime truncatedDate = DateUtil.truncateDate(OffsetDateTime.now(), unit);
         OffsetDateTime startDate = DateUtil.deltaDate(truncatedDate, unit, delta);
 
-        Function<OffsetDateTime, OffsetDateTime> stepDate = switch(unit) {
-            case "HOUR" -> d -> d.plusMinutes(1);
-            case "DAY" -> d -> d.plusHours(1);
-            case "WEEK", "MONTH" -> d -> d.plusDays(1);
-            case "YEAR" -> d -> d.plusMonths(1);
-            default -> d -> d.plusYears(1);
-        };
-        int stepCount = switch (unit) {
-            case "HOUR" -> 60;
-            case "DAY" -> 24;
-            case "WEEK" -> 7;
-            case "MONTH" -> 31;
-            case "YEAR" -> 12;
-            default -> 0;
-        };
-
-        return getStatGroup(startDate, stepDate, stepCount);
+        return getStatGroup(startDate, TimeUnit.getUnitStep(unit), TimeUnit.getUnitCount(unit));*/
     }
 
     @QueryMapping
     public Travel[] overallStats() {
-        return new Travel[0];
-        //return travelRepository.getAll();
+        return travelRepository.getAll();
     }
 
     @SchemaMapping(typeName = "StatsGroup", field = "emissions")

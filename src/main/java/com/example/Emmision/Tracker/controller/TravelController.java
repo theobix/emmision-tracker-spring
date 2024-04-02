@@ -48,4 +48,9 @@ public class TravelController {
         return travelRepository.CreateTravel(method, datetime, distance);
     }
 
+    @QueryMapping
+    public float test() {
+        return 3;
+    }
+
 }

@@ -21,14 +21,13 @@ public class TravelRepository {
     }
 
     public Travel CreateTravel(TravelMethod method, OffsetDateTime datetime, float distance) {
-        float unitEmission = TravelMethod.getUnitEmissions(method);
+        float emission = TravelMethod.getUnitEmissions(method) * distance;
         Travel travel = new Travel(
                 String.valueOf(travels.size()),
                 method,
                 datetime,
                 distance,
-                unitEmission,
-                distance*unitEmission);
+                emission);
 
         travels.add(travel);
         return travel;

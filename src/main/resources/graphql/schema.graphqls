@@ -10,7 +10,6 @@ type Travel {
     method: TravelMethod!
     datetime: DateTime
     distance: Float
-    unitEmission: Int
     emission: Float
 }
 
@@ -51,6 +50,8 @@ type Query {
     overallStats: OverallStats
 
     travelMethodInfo: [TravelMethodInfo]
+
+    test: Float
 }
 
 type Mutation {

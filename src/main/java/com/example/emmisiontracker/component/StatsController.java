@@ -1,24 +1,19 @@
-package com.example.Emmision.Tracker.controller;
+package com.example.emmisiontracker.component;
 
-import com.example.Emmision.Tracker.constants.TimeUnit;
-import com.example.Emmision.Tracker.constants.TravelMethod;
-import com.example.Emmision.Tracker.domain.OverallStats;
-import com.example.Emmision.Tracker.domain.StatEntry;
-import com.example.Emmision.Tracker.domain.StatsGroup;
-import com.example.Emmision.Tracker.domain.Travel;
-import com.example.Emmision.Tracker.repository.TravelRepository;
-import com.example.Emmision.Tracker.util.DateUtil;
+import com.example.emmisiontracker.constants.TimeUnit;
+import com.example.emmisiontracker.domain.OverallStats;
+import com.example.emmisiontracker.domain.StatsGroup;
+import com.example.emmisiontracker.domain.Travel;
+import com.example.emmisiontracker.repository.TravelRepository;
+import com.example.emmisiontracker.util.DateUtil;
 import io.leangen.graphql.annotations.GraphQLArgument;
-import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 @Component
 @GraphQLApi

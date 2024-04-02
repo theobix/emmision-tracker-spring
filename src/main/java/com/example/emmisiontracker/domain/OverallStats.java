@@ -1,8 +1,7 @@
-package com.example.Emmision.Tracker.domain;
+package com.example.emmisiontracker.domain;
 
-import com.example.Emmision.Tracker.constants.TravelMethod;
-import com.example.Emmision.Tracker.repository.TravelRepository;
-import io.leangen.graphql.annotations.GraphQLContext;
+import com.example.emmisiontracker.constants.TravelMethod;
+import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
 import java.util.function.Function;

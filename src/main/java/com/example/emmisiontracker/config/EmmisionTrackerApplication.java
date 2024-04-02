@@ -1,4 +1,4 @@
-package com.example.Emmision.Tracker.config;
+package com.example.emmisiontracker.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

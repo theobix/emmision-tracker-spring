@@ -1,6 +1,6 @@
-package com.example.Emmision.Tracker.domain;
+package com.example.emmisiontracker.domain;
 
-import com.example.Emmision.Tracker.constants.TravelMethod;
+import com.example.emmisiontracker.constants.TravelMethod;
 
 import java.time.LocalDate;
 

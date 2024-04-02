@@ -1,13 +1,11 @@
-package com.example.Emmision.Tracker.repository;
+package com.example.emmisiontracker.repository;
 
-import com.example.Emmision.Tracker.constants.TravelMethod;
-import com.example.Emmision.Tracker.domain.Travel;
+import com.example.emmisiontracker.constants.TravelMethod;
+import com.example.emmisiontracker.domain.Travel;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

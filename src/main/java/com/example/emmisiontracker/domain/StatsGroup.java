@@ -1,10 +1,9 @@
-package com.example.Emmision.Tracker.domain;
+package com.example.emmisiontracker.domain;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;

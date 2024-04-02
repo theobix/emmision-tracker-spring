@@ -1,9 +1,9 @@
-package com.example.Emmision.Tracker.controller;
+package com.example.emmisiontracker.component;
 
-import com.example.Emmision.Tracker.constants.TravelMethod;
-import com.example.Emmision.Tracker.domain.Travel;
-import com.example.Emmision.Tracker.domain.TravelMethodInfo;
-import com.example.Emmision.Tracker.repository.TravelRepository;
+import com.example.emmisiontracker.constants.TravelMethod;
+import com.example.emmisiontracker.domain.Travel;
+import com.example.emmisiontracker.domain.TravelMethodInfo;
+import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;

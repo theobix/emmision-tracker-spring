@@ -1,4 +1,4 @@
-package com.example.Emmision.Tracker.config;
+package com.example.emmisiontracker.config;
 
 import graphql.scalars.ExtendedScalars;
 import org.springframework.context.annotation.Bean;

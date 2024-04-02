@@ -1,11 +1,9 @@
-package com.example.Emmision.Tracker.util;
+package com.example.emmisiontracker.util;
 
-import com.example.Emmision.Tracker.constants.TimeUnit;
+import com.example.emmisiontracker.constants.TimeUnit;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
 public class DateUtil {

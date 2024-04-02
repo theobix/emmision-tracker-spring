@@ -1,7 +1,4 @@
-package com.example.Emmision.Tracker.constants;
-
-import java.util.Arrays;
-import java.util.List;
+package com.example.emmisiontracker.constants;
 
 public enum TravelMethod {
     FOOT,

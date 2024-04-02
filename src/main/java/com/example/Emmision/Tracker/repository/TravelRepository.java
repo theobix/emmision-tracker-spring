@@ -4,7 +4,9 @@ import com.example.Emmision.Tracker.constants.TravelMethod;
 import com.example.Emmision.Tracker.domain.Travel;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,12 +22,12 @@ public class TravelRepository {
         travels = new ArrayList<>();
     }
 
-    public Travel CreateTravel(TravelMethod method, OffsetDateTime datetime, float distance) {
+    public Travel CreateTravel(TravelMethod method, LocalDate date, float distance) {
         float emission = TravelMethod.getUnitEmissions(method) * distance;
         Travel travel = new Travel(
                 String.valueOf(travels.size()),
                 method,
-                datetime,
+                date,
                 distance,
                 emission);
 
@@ -55,9 +57,10 @@ public class TravelRepository {
         return sortedTravels.subList(sliceFrom, sliceTo).toArray(Travel[]::new);
     }
 
-    public Travel[] getTravelsBetween(OffsetDateTime after, OffsetDateTime before) {
+    public Travel[] getTravelsBetween(LocalDate after, LocalDate before) {
         return travels.stream().filter(travel ->
-                    travel.datetime().isAfter(after) && travel.datetime().isBefore(before)
+                    travel.date().equals(after) ||
+                            (travel.date().isAfter(after) && travel.date().isBefore(before))
         ).toArray(Travel[]::new);
     }
 

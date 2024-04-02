@@ -2,17 +2,15 @@ package com.example.Emmision.Tracker.domain;
 
 import com.example.Emmision.Tracker.constants.TravelMethod;
 
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 
-public record Travel(String id, TravelMethod method, OffsetDateTime datetime, float distance, float emission)
+public record Travel(String id, TravelMethod method, LocalDate date, float distance, float emission)
     implements Comparable<Travel> {
 
     @Override
     public int compareTo(Travel other) {
-        if (this.datetime.equals(other.datetime)) return 0;
-        else if (this.datetime.isAfter(other.datetime)) return -1;
+        if (this.date.equals(other.date)) return 0;
+        else if (this.date.isAfter(other.date)) return -1;
         else return 1;
     }
 }

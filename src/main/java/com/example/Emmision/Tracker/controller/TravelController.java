@@ -4,15 +4,17 @@ import com.example.Emmision.Tracker.constants.TravelMethod;
 import com.example.Emmision.Tracker.domain.Travel;
 import com.example.Emmision.Tracker.domain.TravelMethodInfo;
 import com.example.Emmision.Tracker.repository.TravelRepository;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
+import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLMutation;
+import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
+import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 
-@Controller
+@Component
+@GraphQLApi
 public class TravelController {
 
     private final TravelRepository travelRepository;
@@ -20,37 +22,35 @@ public class TravelController {
         this.travelRepository = travelRepository;
     }
 
-    @QueryMapping
+    @GraphQLQuery(description = "Get list of all possible travel methods")
     public TravelMethod[] travelMethods() {
         return TravelMethod.values();
     }
 
-    @QueryMapping
-    public Travel travelById(@Argument String id) {
+    @GraphQLQuery(description = "Get travel by it's unique ID")
+    public Travel travelById(@GraphQLArgument String id) {
         return travelRepository.getById(id);
     }
 
-    @QueryMapping
-    public Travel[] travelHistory(@Argument int page, @Argument int count, @Argument boolean descending) {
+    @GraphQLQuery(description = "Get travel history sorted by date and organised by pages")
+    public Travel[] travelHistory(@GraphQLArgument int page, @GraphQLArgument int count, @GraphQLArgument boolean descending) {
         return travelRepository.getHistory(page, count, descending);
     }
 
-    @QueryMapping
+    @GraphQLQuery(description = "Get info about every possible travel method")
     public TravelMethodInfo[] travelMethodInfo() {
         return Arrays.stream(TravelMethod.values())
                 .map(t -> new TravelMethodInfo(t, TravelMethod.getUnitEmissions(t)))
                 .toArray(TravelMethodInfo[]::new);
     }
 
-    @MutationMapping
-    public Travel addTravel(@Argument TravelMethod method, @Argument float distance, @Argument OffsetDateTime datetime) {
-        datetime = datetime == null ? OffsetDateTime.now() : datetime;
-        return travelRepository.CreateTravel(method, datetime, distance);
-    }
+    @GraphQLMutation
+    public Travel addTravel(@GraphQLArgument TravelMethod method,
+                            @GraphQLArgument float distance,
+                            @GraphQLArgument LocalDate date) {
 
-    @QueryMapping
-    public float test() {
-        return 3;
+        if (date == null) date = LocalDate.now();
+        return travelRepository.CreateTravel(method, date, distance);
     }
 
 }

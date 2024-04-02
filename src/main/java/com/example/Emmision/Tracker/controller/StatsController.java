@@ -9,6 +9,7 @@ import com.example.Emmision.Tracker.util.DateUtil;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.stereotype.Controller;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-
+@Controller
 public class StatsController {
 
     private final TravelRepository travelRepository;
@@ -88,7 +89,7 @@ public class StatsController {
 
     @SchemaMapping(typeName = "OverallStats", field = "methodDistribution")
     public float[] getMethodDistribution() {
-        return getDistribution(s -> (float)s.mapToDouble(Travel::distance).sum());
+        return getDistribution(s -> (float)s.count());
     }
 
     @SchemaMapping(typeName = "OverallStats", field = "emissionDistribution")

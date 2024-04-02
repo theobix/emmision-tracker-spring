@@ -49,9 +49,11 @@ public class TravelRepository {
 
         int sliceTo = Math.min(sliceFrom + count, travels.size());
 
-        List<Travel> sortedTravels = new ArrayList<>(travels.stream().sorted().toList());
-        if (!descending)
-            Collections.reverse(sortedTravels);
+        List<Travel> sortedTravels = travels.stream().sorted().toList();
+        if (!descending) {
+            List<?> shallowCopy = sortedTravels.subList(0, sortedTravels.size());
+            Collections.reverse(shallowCopy);
+        }
 
         return sortedTravels.subList(sliceFrom, sliceTo).toArray(Travel[]::new);
     }

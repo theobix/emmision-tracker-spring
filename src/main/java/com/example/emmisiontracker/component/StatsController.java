@@ -1,9 +1,9 @@
 package com.example.emmisiontracker.component;
 
 import com.example.emmisiontracker.constants.TimeUnit;
-import com.example.emmisiontracker.domain.OverallStats;
-import com.example.emmisiontracker.domain.StatsGroup;
-import com.example.emmisiontracker.domain.Travel;
+import com.example.emmisiontracker.domain.stats.OverallStats;
+import com.example.emmisiontracker.domain.stats.StatsGroup;
+import com.example.emmisiontracker.domain.travel.Travel;
 import com.example.emmisiontracker.repository.TravelRepository;
 import com.example.emmisiontracker.util.DateUtil;
 import io.leangen.graphql.annotations.GraphQLArgument;

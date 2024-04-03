@@ -1,5 +1,6 @@
-package com.example.emmisiontracker.domain;
+package com.example.emmisiontracker.domain.stats;
 
+import com.example.emmisiontracker.domain.travel.Travel;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLQuery;
 

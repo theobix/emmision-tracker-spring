@@ -1,7 +1,7 @@
 package com.example.emmisiontracker.repository;
 
 import com.example.emmisiontracker.constants.TravelMethod;
-import com.example.emmisiontracker.domain.Travel;
+import com.example.emmisiontracker.domain.travel.Travel;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 

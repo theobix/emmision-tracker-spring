@@ -1,4 +1,4 @@
-package com.example.emmisiontracker.domain;
+package com.example.emmisiontracker.domain.travel;
 
 import com.example.emmisiontracker.constants.TravelMethod;
 

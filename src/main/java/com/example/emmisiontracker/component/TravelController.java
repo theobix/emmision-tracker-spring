@@ -1,8 +1,8 @@
 package com.example.emmisiontracker.component;
 
 import com.example.emmisiontracker.constants.TravelMethod;
-import com.example.emmisiontracker.domain.Travel;
-import com.example.emmisiontracker.domain.TravelMethodInfo;
+import com.example.emmisiontracker.domain.travel.Travel;
+import com.example.emmisiontracker.domain.travel.TravelMethodInfo;
 import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EmmisionTrackerApplication {
+public class EmissionTrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EmmisionTrackerApplication.class, args);
+		SpringApplication.run(EmissionTrackerApplication.class, args);
 	}
 
 }

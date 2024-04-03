@@ -2,6 +2,8 @@ package com.example.emmisiontracker.repository;
 
 import com.example.emmisiontracker.constants.TravelMethod;
 import com.example.emmisiontracker.domain.travel.Travel;
+import com.example.emmisiontracker.domain.travel.TravelStop;
+import com.example.emmisiontracker.domain.travel.WorldPoint;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -20,14 +22,12 @@ public class TravelRepository {
         travels = new ArrayList<>();
     }
 
-    public Travel CreateTravel(TravelMethod method, LocalDate date, float distance) {
-        float emission = TravelMethod.getUnitEmissions(method) * distance;
+    public Travel CreateTravel(LocalDate date, WorldPoint start, TravelStop[] stops) {
         Travel travel = new Travel(
                 String.valueOf(travels.size()),
-                method,
                 date,
-                distance,
-                emission);
+                start,
+                stops);
 
         travels.add(travel);
         return travel;

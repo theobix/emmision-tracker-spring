@@ -3,6 +3,8 @@ package com.example.emmisiontracker.component;
 import com.example.emmisiontracker.constants.TravelMethod;
 import com.example.emmisiontracker.domain.travel.Travel;
 import com.example.emmisiontracker.domain.travel.TravelMethodInfo;
+import com.example.emmisiontracker.domain.travel.TravelStop;
+import com.example.emmisiontracker.domain.travel.WorldPoint;
 import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
@@ -45,12 +47,19 @@ public class TravelController {
     }
 
     @GraphQLMutation
-    public Travel addTravel(@GraphQLArgument TravelMethod method,
-                            @GraphQLArgument float distance,
-                            @GraphQLArgument LocalDate date) {
+    public Travel addTravel(@GraphQLArgument LocalDate date,
+                            @GraphQLArgument WorldPoint start,
+                            @GraphQLArgument TravelStop[] stops) {
 
         if (date == null) date = LocalDate.now();
-        return travelRepository.CreateTravel(method, date, distance);
+
+        WorldPoint previousPoint = start;
+        for (TravelStop stop : stops) {
+            stop.setData(previousPoint);
+            previousPoint = stop.getPoint();
+        }
+
+        return travelRepository.CreateTravel(date, start, stops);
     }
 
 }

@@ -2,9 +2,11 @@ package com.example.emmisiontracker.domain.stats;
 
 import com.example.emmisiontracker.constants.TravelMethod;
 import com.example.emmisiontracker.domain.travel.Travel;
+import com.example.emmisiontracker.domain.travel.TravelStop;
 import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
+import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -16,45 +18,49 @@ public class OverallStats {
     }
 
     @GraphQLQuery(name = "totalEmission")
-    public float getTotalEmission() {
-        return (float) travelRepository.getStream().mapToDouble(Travel::emission).sum();
+    public double getTotalEmission() {
+        return travelRepository.getStream().mapToDouble(Travel::emission).sum();
     }
 
     @GraphQLQuery(name = "totalDistance")
-    public float getTotalDistance() {
-        return (float) travelRepository.getStream().mapToDouble(Travel::distance).sum();
+    public double getTotalDistance() {
+        return travelRepository.getStream().mapToDouble(Travel::distance).sum();
     }
 
-   @GraphQLQuery(name = "totalTravels")
+    @GraphQLQuery(name = "totalTravels")
     public int getTravelCount() {
         return travelRepository.getCount();
     }
 
     @GraphQLQuery(name = "methodsUsed")
     public TravelMethod[] getAllMethodsUsed() {
-        return travelRepository.getStream().map(Travel::method).distinct().toArray(TravelMethod[]::new);
+        ArrayList<TravelMethod> travelMethods = new ArrayList<>();
+        travelRepository.getStream().forEach(t -> travelMethods.addAll(t.travelMethods()));
+
+        return travelMethods.stream().distinct().toArray(TravelMethod[]::new);
     }
 
     @GraphQLQuery(name = "methodDistribution")
-    public float[] getMethodDistribution() {
-        return getDistribution(s -> (float)s.mapToDouble(Travel::distance).sum());
+    public double[] getMethodDistribution() {
+        return getDistribution(s -> s.mapToDouble(TravelStop::distance).sum());
     }
 
     @GraphQLQuery(name = "emissionDistribution")
-    public float[] getEmissionDistribution() {
-        return getDistribution(s -> (float)s.mapToDouble(Travel::emission).sum());
+    public double[] getEmissionDistribution() {
+        return getDistribution(s -> s.mapToDouble(TravelStop::emission).sum());
     }
 
-    private float[] getDistribution(Function<Stream<Travel>, Float> reduce)
+    private double[] getDistribution(Function<Stream<TravelStop>, Double> reduce)
     {
         TravelMethod[] usedMethods = getAllMethodsUsed();
-        float[] methodDistribution = new float[usedMethods.length];
+        double[] methodDistribution = new double[usedMethods.length];
 
         for (int i = 0; i < usedMethods.length; i++) {
             final TravelMethod method = usedMethods[i];
-            Stream<Travel> stream = travelRepository.getStream().filter(t -> t.method().equals(method));
+            double total = travelRepository.getStream().mapToDouble(t ->
+                    reduce.apply(t.getStopsWithMethod(method).stream())).sum();
 
-            methodDistribution[i] = reduce.apply(stream);
+            methodDistribution[i] = total;
         }
 
         return methodDistribution;

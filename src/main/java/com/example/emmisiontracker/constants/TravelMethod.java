@@ -7,6 +7,7 @@ public enum TravelMethod {
     ELECTRIC_CAR,
     BUS,
     SUBWAY,
+    TRAIN,
     FERRY,
     AIRPLANE;
 
@@ -18,6 +19,7 @@ public enum TravelMethod {
             case SUBWAY -> .028f;
             case FERRY -> .019f;
             case AIRPLANE -> .246f;
+            case TRAIN -> .035f;
             default -> 0f;
         };
     }

@@ -32,13 +32,13 @@ public record Travel(String id, LocalDate date, WorldPoint start, TravelStop[] s
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    @GraphQLQuery(name = "travelStops", description = "Get all travel stops of this travel")
+    @GraphQLQuery(name = "stops", description = "Get all travel stops of this travel")
     public TravelStop[] getAllStops() { return stops; }
 
-    @GraphQLQuery(name = "startPoint", description = "Get the first point of this travel")
+    @GraphQLQuery(name = "start", description = "Get the first point of this travel")
     public WorldPoint getStartPoint() { return start; }
 
-    @GraphQLQuery(name = "endPoint", description = "Get the first point of this travel")
+    @GraphQLQuery(name = "end", description = "Get the first point of this travel")
     public WorldPoint getLastPoint() { return stops[stops.length - 1].getPoint(); }
 
 

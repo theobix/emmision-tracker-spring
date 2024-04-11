@@ -39,7 +39,7 @@ public class TravelStop {
     public void setData(WorldPoint previousPoint) {
         this.previousPoint = previousPoint;
         distance = CoordinatesUtil.distance(previousPoint.coordinates(), point.coordinates());
-        emission = distance * TravelMethod.getUnitEmissions(travelMethod);
+        emission = distance * travelMethod.getEmissionPerKilometer();
     }
 
 }

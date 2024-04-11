@@ -1,26 +1,22 @@
 package com.example.emmisiontracker.constants;
 
-public enum TravelMethod {
-    FOOT,
-    BICYCLE,
-    DIESEL_CAR,
-    ELECTRIC_CAR,
-    BUS,
-    SUBWAY,
-    TRAIN,
-    FERRY,
-    AIRPLANE;
+import io.leangen.graphql.annotations.types.GraphQLType;
 
-    public static float getUnitEmissions(TravelMethod method) {
-        return switch (method) {
-            case DIESEL_CAR -> .171f;
-            case ELECTRIC_CAR -> .047f;
-            case BUS -> .097f;
-            case SUBWAY -> .028f;
-            case FERRY -> .019f;
-            case AIRPLANE -> .246f;
-            case TRAIN -> .035f;
-            default -> 0f;
-        };
+public enum TravelMethod {
+    FOOT(0),
+    BICYCLE(0),
+    DIESEL_CAR(.171),
+    ELECTRIC_CAR(.047),
+    BUS(.097),
+    SUBWAY(.028),
+    TRAIN(0.035),
+    FERRY(.019),
+    AIRPLANE(.246);
+
+    private final double emissionPerKilometer;
+    TravelMethod(double emissionPerKilometer) {
+        this.emissionPerKilometer = emissionPerKilometer;
     }
+    public double getEmissionPerKilometer() { return emissionPerKilometer; }
+
 }

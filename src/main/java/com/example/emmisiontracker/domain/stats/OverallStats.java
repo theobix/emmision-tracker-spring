@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 public class OverallStats {
 
+
     private final TravelRepository travelRepository;
     public  OverallStats(TravelRepository travelRepository) {
         this.travelRepository = travelRepository;
@@ -19,23 +20,23 @@ public class OverallStats {
 
     @GraphQLQuery(name = "totalEmission")
     public double getTotalEmission() {
-        return travelRepository.getStream().mapToDouble(Travel::emission).sum();
+        return travelRepository.findAll().stream().mapToDouble(Travel::getEmission).sum();
     }
 
     @GraphQLQuery(name = "totalDistance")
     public double getTotalDistance() {
-        return travelRepository.getStream().mapToDouble(Travel::distance).sum();
+        return travelRepository.findAll().stream().mapToDouble(Travel::getDistance).sum();
     }
 
     @GraphQLQuery(name = "totalTravels")
-    public int getTravelCount() {
-        return travelRepository.getCount();
+    public long getTravelCount() {
+        return travelRepository.count();
     }
 
     @GraphQLQuery(name = "methodsUsed")
     public TravelMethod[] getAllMethodsUsed() {
         ArrayList<TravelMethod> travelMethods = new ArrayList<>();
-        travelRepository.getStream().forEach(t -> travelMethods.addAll(t.travelMethods()));
+        travelRepository.findAll().forEach(t -> travelMethods.addAll(t.travelMethods()));
 
         return travelMethods.stream().distinct().toArray(TravelMethod[]::new);
     }
@@ -57,7 +58,7 @@ public class OverallStats {
 
         for (int i = 0; i < usedMethods.length; i++) {
             final TravelMethod method = usedMethods[i];
-            double total = travelRepository.getStream().mapToDouble(t ->
+            double total = travelRepository.findAll().stream().mapToDouble(t ->
                     reduce.apply(t.getStopsWithMethod(method).stream())).sum();
 
             methodDistribution[i] = total;

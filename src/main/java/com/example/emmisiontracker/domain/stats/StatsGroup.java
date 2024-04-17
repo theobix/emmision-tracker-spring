@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-public record StatsGroup(LocalDate[] labels, List<Travel[]> travelGroups) {
+public record StatsGroup(LocalDate[] labels, List<List<Travel>> travelGroups) {
 
 
     @GraphQLQuery(name = "emissions")
@@ -28,10 +28,10 @@ public record StatsGroup(LocalDate[] labels, List<Travel[]> travelGroups) {
 
         int size = travelGroups.size();
         for (int i = 0; i < size; i++) {
-            Travel[] travels = travelGroups.get(i);
+            List<Travel> travels = travelGroups.get(i);
 
             for (Travel travel : travels) {
-                for (TravelStop travelStop : travel.stops()) {
+                for (TravelStop travelStop : travel.getStops()) {
                     String name = separateMethods ? travelStop.getTravelMethod().toString() : statName;
 
                     if (!stats.containsKey(name))

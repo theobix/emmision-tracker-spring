@@ -1,27 +1,30 @@
-package com.example.emmisiontracker.repository;
+package com.example.emmisiontracker.service;
 
 import com.example.emmisiontracker.domain.stats.StatsGroup;
 import com.example.emmisiontracker.domain.travel.Travel;
-import org.springframework.stereotype.Repository;
+import com.example.emmisiontracker.repository.TravelRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
-@Repository
-public class StatsGroupRepository {
+@Service
+public class StatsService {
+
 
     private final TravelRepository travelRepository;
-    public StatsGroupRepository(TravelRepository travelRepository) {
+    public StatsService(TravelRepository travelRepository) {
         this.travelRepository = travelRepository;
     }
 
     public StatsGroup getStatGroup(LocalDate startDate, Function<LocalDate, LocalDate> step, int stepCount) {
-        ArrayList<Travel[]> travelsGroups = new ArrayList<>();
+        ArrayList<List<Travel>> travelsGroups = new ArrayList<>();
         LocalDate[] dates = new LocalDate[stepCount];
 
         for (int i = 0; i < stepCount; i++) {
-            travelsGroups.add(travelRepository.getTravelsBetween(startDate, step.apply(startDate)));
+            travelsGroups.add(travelRepository.findByDateBetween(startDate, step.apply(startDate).minusDays(1)));
 
             dates[i] = startDate;
             startDate = step.apply(startDate);
@@ -29,5 +32,4 @@ public class StatsGroupRepository {
 
         return new StatsGroup(dates, travelsGroups);
     }
-
 }

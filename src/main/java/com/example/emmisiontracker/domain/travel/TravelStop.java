@@ -3,17 +3,40 @@ package com.example.emmisiontracker.domain.travel;
 import com.example.emmisiontracker.constants.TravelMethod;
 import com.example.emmisiontracker.util.CoordinatesUtil;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.leangen.graphql.annotations.GraphQLInputField;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.annotations.types.GraphQLType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @GraphQLType
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class TravelStop {
 
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-    final private TravelMethod travelMethod;
-    final private WorldPoint point;
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Travel travel;
+
+    private TravelMethod travelMethod;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private WorldPoint point;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     private WorldPoint previousPoint;
+
+    @GraphQLInputField(defaultValue = "0")
     private double distance = 0;
+    @GraphQLInputField(defaultValue = "0")
     private double emission = 0;
 
     @JsonCreator
@@ -21,9 +44,6 @@ public class TravelStop {
         this.travelMethod = travelMethod;
         this.point = point;
     }
-
-    public TravelMethod getTravelMethod() { return travelMethod; }
-    public WorldPoint getPoint() { return point; }
 
     @GraphQLQuery(name = "previousPoint")
     public WorldPoint previousPoint() { return previousPoint; }
@@ -36,9 +56,11 @@ public class TravelStop {
 
 
 
-    public void setData(WorldPoint previousPoint) {
+    public void setData(Travel travel, WorldPoint previousPoint) {
+        this.travel = travel;
         this.previousPoint = previousPoint;
-        distance = CoordinatesUtil.distance(previousPoint.coordinates(), point.coordinates());
+
+        distance = CoordinatesUtil.distance(previousPoint.getCoordinates(), point.getCoordinates());
         emission = distance * travelMethod.getEmissionPerKilometer();
     }
 

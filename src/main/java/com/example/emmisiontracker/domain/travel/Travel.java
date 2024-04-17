@@ -2,44 +2,80 @@ package com.example.emmisiontracker.domain.travel;
 
 import com.example.emmisiontracker.constants.TravelMethod;
 import io.leangen.graphql.annotations.GraphQLQuery;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
-public record Travel(String id, LocalDate date, WorldPoint start, TravelStop[] stops, double distance, double emission)
-        implements Comparable<Travel> {
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor
+@Builder
+public class Travel implements Comparable<Travel> {
 
-    public Travel(String id, LocalDate date, WorldPoint start, TravelStop[] stops) {
-        this(id, date, start, stops,
-                reduceStops(stops, TravelStop::distance),
-                reduceStops(stops, TravelStop::emission));
+    @Id @GeneratedValue
+    private Integer id;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDate date;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private WorldPoint start;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<TravelStop> stops;
+
+    private double distance;
+    private double emission;
+
+
+    public Travel(LocalDate date, WorldPoint start, List<TravelStop> stops) {
+        this.date = date;
+        this.start = start;
+        this.stops = stops;
+
+        WorldPoint previousPoint = start;
+        for (TravelStop stop : stops) {
+            stop.setData(this, previousPoint);
+            previousPoint = stop.getPoint();
+        }
+
+        this.emission = reduceStops(TravelStop::emission);
+        this.distance = reduceStops(TravelStop::distance);
     }
-    public static double reduceStops(TravelStop[] stops, ToDoubleFunction<TravelStop> reduce) {
-        return Arrays.stream(stops).mapToDouble(reduce).sum();
+    public double reduceStops(ToDoubleFunction<TravelStop> reduce) {
+        return getStops().stream().mapToDouble(reduce).sum();
     }
+
 
     public Collection<TravelMethod> travelMethods() {
-        return Arrays.stream(stops).map(TravelStop::getTravelMethod)
+        return stops.stream().map(TravelStop::getTravelMethod)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public Collection<TravelStop> getStopsWithMethod(TravelMethod method) {
-        return Arrays.stream(stops).filter(s -> s.getTravelMethod().equals(method))
+        return stops.stream().filter(s -> s.getTravelMethod().equals(method))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @GraphQLQuery(name = "stops", description = "Get all travel stops of this travel")
-    public TravelStop[] getAllStops() { return stops; }
+    public List<TravelStop> getAllStops() { return stops; }
 
     @GraphQLQuery(name = "start", description = "Get the first point of this travel")
     public WorldPoint getStartPoint() { return start; }
 
     @GraphQLQuery(name = "end", description = "Get the first point of this travel")
-    public WorldPoint getLastPoint() { return stops[stops.length - 1].getPoint(); }
+    public WorldPoint getLastPoint() { return stops.get(stops.size() - 1).getPoint(); }
 
 
     @Override

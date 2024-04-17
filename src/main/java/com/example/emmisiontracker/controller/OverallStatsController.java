@@ -8,6 +8,7 @@ import io.leangen.graphql.annotations.GraphQLQuery;
 @GraphQLController
 public class OverallStatsController {
 
+
     private final TravelRepository travelRepository;
     public OverallStatsController(TravelRepository travelRepository) {
         this.travelRepository = travelRepository;

@@ -10,9 +10,13 @@ import com.example.emmisiontracker.repository.TravelRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @GraphQLController
 public class TravelController {
@@ -22,32 +26,26 @@ public class TravelController {
         this.travelRepository = travelRepository;
     }
 
-
     @GraphQLQuery(description = "Get travel by it's unique ID")
-    public Travel travelById(@GraphQLArgument String id) {
-        return travelRepository.getById(id);
+    public Travel travelById(@GraphQLArgument Integer id) {
+        return travelRepository.getReferenceById(id);
     }
 
     @GraphQLQuery(description = "Get travel history sorted by date and organised by pages")
-    public Travel[] travelHistory(@GraphQLArgument int page, @GraphQLArgument int count, @GraphQLArgument boolean descending) {
-        return travelRepository.getHistory(page, count, descending);
+    public List<Travel> travelHistory(@GraphQLArgument int page, @GraphQLArgument int count, @GraphQLArgument boolean descending) {
+        Sort sort = descending ? Sort.by("date").descending() : Sort.by("date");
+        Pageable pageable = PageRequest.of(page, count, sort);
+
+        return travelRepository.findAll(pageable).toList();
     }
 
 
     @GraphQLMutation
-    public Travel addTravel(@GraphQLArgument LocalDate date,
-                            @GraphQLArgument WorldPoint start,
-                            @GraphQLArgument TravelStop[] stops) {
-
+    public Travel addTravel(@GraphQLArgument LocalDate date, @GraphQLArgument WorldPoint start, @GraphQLArgument List<TravelStop> stops) {
         if (date == null) date = LocalDate.now();
 
-        WorldPoint previousPoint = start;
-        for (TravelStop stop : stops) {
-            stop.setData(previousPoint);
-            previousPoint = stop.getPoint();
-        }
-
-        return travelRepository.CreateTravel(date, start, stops);
+        Travel travel = new Travel(date, start, stops);
+        return travelRepository.save(travel);
     }
 
 }

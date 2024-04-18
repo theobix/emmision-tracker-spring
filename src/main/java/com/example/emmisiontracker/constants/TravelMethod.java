@@ -1,6 +1,9 @@
 package com.example.emmisiontracker.constants;
 
+import com.example.emmisiontracker.domain.stats.StatEntry;
 import io.leangen.graphql.annotations.types.GraphQLType;
+
+import java.util.Arrays;
 
 public enum TravelMethod {
     FOOT(0),
@@ -17,6 +20,12 @@ public enum TravelMethod {
     TravelMethod(double emissionPerKilometer) {
         this.emissionPerKilometer = emissionPerKilometer;
     }
+
     public double getEmissionPerKilometer() { return emissionPerKilometer; }
+    public static StatEntry[] getAllMethodStats() {
+        return Arrays.stream(values())
+                .map(t -> StatEntry.Create(t.toString(), t.getEmissionPerKilometer()))
+                .toArray(StatEntry[]::new);
+    }
 
 }

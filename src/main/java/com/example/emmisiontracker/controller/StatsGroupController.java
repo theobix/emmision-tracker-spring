@@ -23,10 +23,7 @@ public class StatsGroupController {
         LocalDate truncatedDate = DateUtil.truncateDate(LocalDate.now(), unit);
         LocalDate startDate = DateUtil.deltaDate(truncatedDate, unit, delta);
 
-        return statsService.getStatGroup(
-                startDate,
-                TimeUnit.getUnitStep(unit),
-                TimeUnit.getUnitCount(unit));
+        return statsService.getStatGroup(startDate, TimeUnit.getUnitStep(unit), TimeUnit.getUnitCount(unit));
     }
 
 

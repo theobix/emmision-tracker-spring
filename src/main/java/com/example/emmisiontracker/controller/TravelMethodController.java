@@ -18,8 +18,6 @@ public class TravelMethodController {
 
     @GraphQLQuery(description = "Get info about every possible travel method")
     public StatEntry[] travelMethodInfo() {
-        return Arrays.stream(TravelMethod.values())
-                .map(t -> StatEntry.Create(t.toString(), t.getEmissionPerKilometer()))
-                .toArray(StatEntry[]::new);
+        return TravelMethod.getAllMethodStats();
     }
 }

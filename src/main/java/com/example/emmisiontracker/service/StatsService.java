@@ -3,6 +3,7 @@ package com.example.emmisiontracker.service;
 import com.example.emmisiontracker.domain.stats.StatsGroup;
 import com.example.emmisiontracker.domain.travel.Travel;
 import com.example.emmisiontracker.repository.TravelRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,13 +12,10 @@ import java.util.List;
 import java.util.function.Function;
 
 @Service
+@AllArgsConstructor
 public class StatsService {
 
-
     private final TravelRepository travelRepository;
-    public StatsService(TravelRepository travelRepository) {
-        this.travelRepository = travelRepository;
-    }
 
     public StatsGroup getStatGroup(LocalDate startDate, Function<LocalDate, LocalDate> step, int stepCount) {
         ArrayList<List<Travel>> travelsGroups = new ArrayList<>();

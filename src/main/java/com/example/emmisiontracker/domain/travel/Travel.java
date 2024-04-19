@@ -1,6 +1,7 @@
 package com.example.emmisiontracker.domain.travel;
 
 import com.example.emmisiontracker.constants.TravelMethod;
+import com.example.emmisiontracker.domain.user.User;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,10 @@ public class Travel implements Comparable<Travel> {
 
     @Id @GeneratedValue
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn
+    private User ownedBy;
 
     @Column(nullable = false, updatable = false)
     private LocalDate date;

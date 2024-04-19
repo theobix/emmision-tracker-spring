@@ -6,7 +6,6 @@ import lombok.Data;
 
 @GraphQLType
 @Data
-@Builder
 public class UserDto {
 
     private String username;

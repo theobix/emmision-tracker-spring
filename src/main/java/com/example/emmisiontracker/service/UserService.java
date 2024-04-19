@@ -78,11 +78,4 @@ public class UserService {
         return null;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public String test() {
-        User user = getUserFromContext();
-
-        return user.getName();
-    }
-
 }

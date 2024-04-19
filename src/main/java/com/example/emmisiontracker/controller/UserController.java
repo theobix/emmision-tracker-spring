@@ -36,9 +36,4 @@ public class UserController {
         return userService.login(credentialsInputDto);
     }
 
-    @GraphQLQuery
-    public String test() {
-        return userService.test();
-    }
-
 }

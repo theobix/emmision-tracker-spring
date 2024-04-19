@@ -25,9 +25,9 @@ public class Travel implements Comparable<Travel> {
     @Id @GeneratedValue
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn
-    private User ownedBy;
+    private User owner;
 
     @Column(nullable = false, updatable = false)
     private LocalDate date;

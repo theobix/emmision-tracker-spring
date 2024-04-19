@@ -20,10 +20,7 @@ public class StatsGroupController {
 
     @GraphQLQuery(description = "Get travel stats in given time period")
     public StatsGroup stats(@GraphQLArgument TimeUnit unit, @GraphQLArgument int delta) {
-        LocalDate truncatedDate = DateUtil.truncateDate(LocalDate.now(), unit);
-        LocalDate startDate = DateUtil.deltaDate(truncatedDate, unit, delta);
-
-        return statsService.getStatGroup(startDate, TimeUnit.getUnitStep(unit), TimeUnit.getUnitCount(unit));
+        return statsService.getStatGroup(unit, delta);
     }
 
 

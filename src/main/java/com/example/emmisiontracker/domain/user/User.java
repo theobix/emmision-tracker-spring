@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     private boolean active = true;
 
-    @OneToMany(mappedBy = "ownedBy", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Travel> travels;
 
     @Override

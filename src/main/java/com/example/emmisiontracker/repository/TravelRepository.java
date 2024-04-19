@@ -1,23 +1,26 @@
 package com.example.emmisiontracker.repository;
 
-import com.example.emmisiontracker.constants.TravelMethod;
 import com.example.emmisiontracker.domain.travel.Travel;
-import com.example.emmisiontracker.domain.travel.TravelStop;
-import com.example.emmisiontracker.domain.travel.WorldPoint;
-import jakarta.annotation.PostConstruct;
-import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Repository
 public interface TravelRepository extends JpaRepository<Travel, Integer> {
 
-    List<Travel> findByDateBetween(LocalDate start, LocalDate end);
+    @Query(value = "select t from Travel t where t.owner.id = ?1 group by t.id having t.date between ?2 and ?3")
+    List<Travel> findByDateBetween(Integer userId, LocalDate start, LocalDate end);
+
+    List<Travel> findByOwnerIdAndDateBetween(Integer userId, LocalDate start, LocalDate end);
+
+    Page<Travel> findByOwnerId(Integer userId, Pageable pageable);
+    List<Travel> findByOwnerId(Integer userId);
+
+
 
 }

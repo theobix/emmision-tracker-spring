@@ -31,4 +31,17 @@ public class DateUtil {
         };
     }
 
+    public static LocalDate addDate(LocalDate original, TimeUnit unit, int i) {
+        return switch(unit) {
+            case DAY -> original.plusDays(i);
+            case WEEK -> original.plusWeeks(i);
+            case MONTH -> original.plusMonths(i);
+            case YEAR -> original.plusYears(i);
+        };
+    }
+
+    public static boolean isDateBetween(LocalDate localDate, LocalDate min, LocalDate max) {
+        return localDate.isEqual(min) || (localDate.isAfter(min) && localDate.isBefore(max));
+    }
+
 }

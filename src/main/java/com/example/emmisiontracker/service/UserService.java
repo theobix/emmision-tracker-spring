@@ -34,7 +34,6 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public User getUserFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -69,7 +68,6 @@ public class UserService {
                 new UsernamePasswordAuthenticationToken(credentialsInputDto.getEmail(), credentialsInputDto.getPassword())
         );
 
-        logger.debug("Authenticated: {}", authentication.isAuthenticated());
 
         if (authentication.isAuthenticated()) {
             return jwtService.generate(credentialsInputDto.getEmail());

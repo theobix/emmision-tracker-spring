@@ -27,7 +27,7 @@ public class UserController {
 
 
     @GraphQLMutation
-    public User registerNewUser(@GraphQLArgument UserDto userDto) {
+    public User register(@GraphQLArgument UserDto userDto) {
         return userService.registerNewUser(userDto);
     }
 

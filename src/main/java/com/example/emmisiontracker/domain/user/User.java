@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     private String profilePictureURL;
 
-    private boolean active = true;
+    private boolean active;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Travel> travels;

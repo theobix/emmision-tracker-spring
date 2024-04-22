@@ -37,7 +37,7 @@ public class Travel implements Comparable<Travel> {
     private WorldPoint start;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OrderColumn
     private List<TravelStop> stops;
 
     private double distance;
@@ -79,7 +79,7 @@ public class Travel implements Comparable<Travel> {
     @GraphQLQuery(name = "start", description = "Get the first point of this travel")
     public WorldPoint getStartPoint() { return start; }
 
-    @GraphQLQuery(name = "end", description = "Get the first point of this travel")
+    @GraphQLQuery(name = "end", description = "Get the last point of this travel")
     public WorldPoint getLastPoint() { return stops.get(stops.size() - 1).getPoint(); }
 
 

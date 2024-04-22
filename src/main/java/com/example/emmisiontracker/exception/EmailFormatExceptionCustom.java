@@ -1,8 +1,8 @@
 package com.example.emmisiontracker.exception;
 
-public class EmailFormatException extends RuntimeException {
+public class EmailFormatExceptionCustom extends RuntimeException {
 
-    public EmailFormatException(String email) {
+    public EmailFormatExceptionCustom(String email) {
         super("The email '" + email + "'is not a valid e-mail");
     }
 

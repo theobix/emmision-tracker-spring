@@ -11,15 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface TravelRepository extends JpaRepository<Travel, Integer> {
+public interface TravelRepository extends JpaRepository<Travel, Long> {
 
     @Query(value = "select t from Travel t where t.owner.id = ?1 group by t.id having t.date between ?2 and ?3")
     List<Travel> findByDateBetween(Integer userId, LocalDate start, LocalDate end);
 
-    List<Travel> findByOwnerIdAndDateBetween(Integer userId, LocalDate start, LocalDate end);
+    List<Travel> findByOwnerIdAndDateBetween(Long userId, LocalDate start, LocalDate end);
 
-    Page<Travel> findByOwnerId(Integer userId, Pageable pageable);
-    List<Travel> findByOwnerId(Integer userId);
+    Page<Travel> findByOwnerId(Long userId, Pageable pageable);
+    List<Travel> findByOwnerId(Long userId);
 
 
 

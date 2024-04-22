@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.util.Map;
 
 @GraphQLController
@@ -34,6 +35,16 @@ public class UserController {
     @GraphQLMutation
     public Map<String, String> login(@GraphQLArgument CredentialsInputDto credentialsInputDto, @GraphQLRootContext DefaultGlobalContext<NativeWebRequest> context) {
         return userService.login(credentialsInputDto);
+    }
+
+    @GraphQLQuery
+    public User profile() {
+        return userService.getUserProfile();
+    }
+
+    @GraphQLMutation
+    public User updateProfile(@GraphQLArgument UserDto userDto) throws IOException {
+        return userService.updateUserProfile(userDto);
     }
 
 }

@@ -18,7 +18,7 @@ public class TravelStop {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(nullable=false)

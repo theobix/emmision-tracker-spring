@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class Travel implements Comparable<Travel> {
 
     @Id @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn

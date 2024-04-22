@@ -13,7 +13,7 @@ public class WorldPoint {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String label;
     private float[] coordinates;

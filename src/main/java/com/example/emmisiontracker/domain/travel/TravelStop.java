@@ -24,6 +24,7 @@ public class TravelStop {
     @JoinColumn(nullable=false)
     private Travel travel;
 
+    @Column(nullable = false)
     private TravelMethod travelMethod;
 
     @OneToOne(cascade = CascadeType.ALL)

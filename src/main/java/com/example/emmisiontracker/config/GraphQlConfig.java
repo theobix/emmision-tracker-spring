@@ -28,7 +28,7 @@ public class GraphQlConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins(
-                        "https://firegreeks.github.io",
+                        "https://theobix.github.io",
                         "http://localhost:9000"
                 );
             }
